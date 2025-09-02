@@ -29,26 +29,15 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuPrincipal));
-            this.pibIcon = new System.Windows.Forms.PictureBox();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.btnComandas = new System.Windows.Forms.Button();
             this.btnProdutos = new System.Windows.Forms.Button();
             this.btnCaixa = new System.Windows.Forms.Button();
             this.btnUsuarios = new System.Windows.Forms.Button();
             this.lblDescricao = new System.Windows.Forms.Label();
+            this.pibIcon = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pibIcon)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pibIcon
-            // 
-            this.pibIcon.Image = global::BakerCommerce.Properties.Resources.bakery;
-            this.pibIcon.Location = new System.Drawing.Point(24, 120);
-            this.pibIcon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pibIcon.Name = "pibIcon";
-            this.pibIcon.Size = new System.Drawing.Size(238, 230);
-            this.pibIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pibIcon.TabIndex = 0;
-            this.pibIcon.TabStop = false;
             // 
             // lblTitulo
             // 
@@ -109,6 +98,7 @@
             this.btnUsuarios.TabIndex = 5;
             this.btnUsuarios.Text = "Usuários";
             this.btnUsuarios.UseVisualStyleBackColor = true;
+            this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
             // 
             // lblDescricao
             // 
@@ -120,6 +110,17 @@
             this.lblDescricao.TabIndex = 6;
             this.lblDescricao.Text = "Olá Fulano da Silva,\r\nEscolha uma opção abaixo:";
             this.lblDescricao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // pibIcon
+            // 
+            this.pibIcon.Image = global::BakerCommerce.Properties.Resources.bakery;
+            this.pibIcon.Location = new System.Drawing.Point(24, 120);
+            this.pibIcon.Margin = new System.Windows.Forms.Padding(4);
+            this.pibIcon.Name = "pibIcon";
+            this.pibIcon.Size = new System.Drawing.Size(238, 230);
+            this.pibIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pibIcon.TabIndex = 0;
+            this.pibIcon.TabStop = false;
             // 
             // MenuPrincipal
             // 
@@ -136,7 +137,7 @@
             this.Font = new System.Drawing.Font("Futura Bk BT", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
