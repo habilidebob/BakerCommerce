@@ -16,6 +16,8 @@ namespace BakerCommerce
         // Objetos globais:
         Model.Usuario usuario;
 
+        int idSelecionado = 0; // armazenar o id do usuário selecionado p/ apagar ou editar
+
         public FormUsuarios(Model.Usuario usuario)
         {
             InitializeComponent();
@@ -72,6 +74,71 @@ namespace BakerCommerce
                 else
                 {
                     MessageBox.Show("Falha ao cadastrar o usuário.",
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+        }
+
+        private void dgvUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Pegar a linha selecionada:
+            int ls = dgvUsuarios.SelectedCells[0].RowIndex;
+
+            // Colocar os valores das células no txbs de edição:
+            txbNomeEditar.Text = dgvUsuarios.Rows[ls].Cells[1].Value.ToString();
+            txbEmailEditar.Text = dgvUsuarios.Rows[ls].Cells[2].Value.ToString();
+
+            // Armazenar o ID de quem foi selecionado:
+            idSelecionado = (int)dgvUsuarios.Rows[ls].Cells[0].Value;
+
+            // Ativar o grbEditar:
+            grbEditar.Enabled = true;
+
+            // Ajustes no grbApagar:
+            lblApagarDescricao.Text = $"Apagar: {dgvUsuarios.Rows[ls].Cells[1].Value}";
+
+            // Ativar o grbApagar:
+            grbApagar.Enabled = true;
+        }
+
+        private void btnApagar_Click(object sender, EventArgs e)
+        {
+            // Perguntar se realmente quer apagar:
+            DialogResult r = MessageBox.Show("Tem certeza que deseja apagar este usuário?",
+                "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.Yes)
+            {
+                // Prosseguir com a exclusão...
+                Model.Usuario usuarioApagar = new Model.Usuario();
+
+                usuarioApagar.Id = idSelecionado;
+                if (usuarioApagar.Apagar())
+                {
+                    MessageBox.Show("Usuário apagado com sucesso!", "Show!",
+                           MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Atualizar o dgv:
+                    AtualizarDgv();
+
+                    // Limpar campos de edição:
+                    txbEmailEditar.Clear();
+                    txbSenhaEditar.Clear();
+                    txbNomeEditar.Clear();
+
+                    // Retornar o idSelecionado para 0
+                    idSelecionado = 0;
+
+                    // Retornar o texto padrão do "apagar":
+                    lblApagarDescricao.Text = "Selecione o usuário que deseja apagar.";
+
+                    // Desabilitar os grbs:
+                    grbApagar.Enabled = false;
+                    grbEditar.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("Falha ao apagar o usuário.",
                     "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
