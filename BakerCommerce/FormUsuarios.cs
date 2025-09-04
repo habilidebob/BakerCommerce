@@ -117,24 +117,9 @@ namespace BakerCommerce
                 {
                     MessageBox.Show("Usuário apagado com sucesso!", "Show!",
                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Atualizar o dgv:
-                    AtualizarDgv();
-
-                    // Limpar campos de edição:
-                    txbEmailEditar.Clear();
-                    txbSenhaEditar.Clear();
-                    txbNomeEditar.Clear();
-
-                    // Retornar o idSelecionado para 0
-                    idSelecionado = 0;
-
-                    // Retornar o texto padrão do "apagar":
-                    lblApagarDescricao.Text = "Selecione o usuário que deseja apagar.";
-
-                    // Desabilitar os grbs:
-                    grbApagar.Enabled = false;
-                    grbEditar.Enabled = false;
+                    
+                    ResetarCampos();
+                    
                 }
                 else
                 {
@@ -142,6 +127,69 @@ namespace BakerCommerce
                     "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+            }
+        }
+
+        public void ResetarCampos()
+        {
+            // Atualizar o dgv:
+            AtualizarDgv();
+
+            // Limpar campos de edição:
+            txbEmailEditar.Clear();
+            txbSenhaEditar.Clear();
+            txbNomeEditar.Clear();
+
+            // Retornar o idSelecionado para 0
+            idSelecionado = 0;
+
+            // Retornar o texto padrão do "apagar":
+            lblApagarDescricao.Text = "Selecione o usuário que deseja apagar.";
+
+            // Desabilitar os grbs:
+            grbApagar.Enabled = false;
+            grbEditar.Enabled = false;
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            // Validar campos:
+            if (txbNomeEditar.Text.Length < 5)
+            {
+                MessageBox.Show("O nome deve ter no mínimo 5 caracteres.",
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (txbEmailEditar.Text.Length < 7) // a@a.co
+            {
+                MessageBox.Show("O email deve ter no mínimo 7 caracteres.",
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (txbSenhaEditar.Text.Length < 6)
+            {
+                MessageBox.Show("A senha deve ter no mínimo 6 caracteres.",
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                // Prosseguir com a edição:
+                Model.Usuario usuarioEditar = new Model.Usuario();
+                usuarioEditar.Id = idSelecionado;
+                usuarioEditar.NomeCompleto = txbNomeEditar.Text;
+                usuarioEditar.Email = txbEmailEditar.Text;
+                usuarioEditar.Senha = txbSenhaEditar.Text;
+
+                if (usuarioEditar.Modificar())
+                {
+                    MessageBox.Show("Usuário modificado com sucesso!", "Show!",
+                           MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ResetarCampos();
+
+                }
+                else
+                {
+                    MessageBox.Show("Falha ao modificar usuário!", "Erro",
+                           MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }
